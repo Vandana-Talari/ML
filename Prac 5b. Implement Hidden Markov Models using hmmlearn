@@ -1,0 +1,82 @@
+# Implement Hidden Markov Models using hmmlearn 
+
+import numpy as np
+
+from hmmlearn.hmm import GaussianHMM
+
+import matplotlib.pyplot as plt
+
+
+np.random.seed(42)
+
+hidden_states = 2
+n_samples = 1000
+
+trans_probs = np.array([
+    [0.7, 0.3],
+    [0.4, 0.6]
+])
+
+means = np.array([
+    [0.0],
+    [5.0]
+])
+
+
+# Covariance matrix needs to be 3D with shape (n_components, n_dim, n_dim)
+covars = np.array([
+    [[1.0]],
+    [[1.0]]
+])  # Correct shape for 'full' covariance type
+
+
+model = GaussianHMM(
+    n_components=hidden_states,
+    covariance_type="full",
+    n_iter=1000
+)
+
+model.startprob_ = np.array([
+    0.6,
+    0.4
+])
+
+model.transmat_ = trans_probs
+
+model.means_ = means
+
+model.covars_ = covars
+
+
+X, Z = model.sample(
+    n_samples
+)
+
+
+model.fit(X)
+
+predicted_states = model.predict(X)
+
+
+plt.figure(
+    figsize=(12, 6)
+)
+
+plt.plot(
+    X,
+    label='Observations'
+)
+
+plt.plot(
+    predicted_states,
+    label='Predicted Hidden States',
+    linestyle='--'
+)
+
+plt.legend()
+
+plt.title(
+    'Hidden Markov Model (HMM) - Predicted Hidden States'
+)
+
+plt.show()
