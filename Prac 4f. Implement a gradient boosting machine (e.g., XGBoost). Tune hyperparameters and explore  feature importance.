@@ -1,4 +1,4 @@
-# Train a random forest ensemble. Experiment with the number of trees and feature sampling. Compare performance to a single decision tree. 
+# Implement a gradient boosting machine (e.g., XGBoost). Tune hyperparameters and explore feature importance.
 
 import numpy as np
 import pandas as pd
